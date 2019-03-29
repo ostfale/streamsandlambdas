@@ -22,7 +22,7 @@ public class Camera {
 	public void setFilters(final Function<Color, Color>... filters) {
 		filter = Stream.of(filters)
 				         .reduce((filter, next) -> filter.compose(next))
-				         .orElse(color -> color);
+				         .orElseGet(Function::identity);
 	}
 
 	public Color capture(final Color inputColor) {
