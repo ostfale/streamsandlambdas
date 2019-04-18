@@ -2,7 +2,10 @@ package modJavaRec.basic;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -15,6 +18,8 @@ import java.util.stream.Stream;
 @Slf4j
 public class MethodReference {
 
+	private static final List<String> strings = Arrays.asList("this", "is", "a", "list", "of", "strings");
+
 	public static void main(String[] args) {
 		new MethodReference().doIt();
 	}
@@ -22,6 +27,23 @@ public class MethodReference {
 	private void doIt() {
 		simpleExample();
 		usingVariable();
+		compareWithCompareTo();
+		compareWithMethodReference();
+		usingLengthExample();
+	}
+
+	private void usingLengthExample() {
+		strings.stream().map(String::length).forEach(System.out::println);
+	}
+
+	private void compareWithMethodReference() {
+		List<String> sortetString = strings.stream().sorted(String::compareTo).collect(Collectors.toList());
+		log.info("List of sorted string with method reference {}" + sortetString.toString());
+	}
+
+	private void compareWithCompareTo() {
+		List<String> sortetString = strings.stream().sorted((s1, s2) -> s1.compareTo(s2)).collect(Collectors.toList());
+		log.info("List of sorted string with compareTo: {}" + sortetString.toString());
 	}
 
 	private void usingVariable() {
